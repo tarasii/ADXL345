@@ -1,2 +1,2 @@
 # ADXL345
-ADXL345 lib
+Small ADXL345 lib with interrupts for arduino
