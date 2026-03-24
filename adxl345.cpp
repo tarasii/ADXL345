@@ -95,6 +95,7 @@ void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources)
   if (no_device) return;
   adxl345_write_register(ADXL345_REG_THRESH_ACT, trehold);
   adxl345_write_register(ADXL345_REG_ACT_INACT_CTL, sources); 
-  adxl345_write_register(ADXL345_REG_INT_ENABLE, ADXL345_ACTIVITI); 
+  adxl345_write_register(ADXL345_REG_INT_ENABLE, ADXL345_ACTIVITI); // Enable Act int
+  adxl345_write_register(ADXL345_REG_INT_MAP, 0); // Map all interrupts to INT1
   adxl345_read_and_clear_interupts();
 }
