@@ -148,5 +148,6 @@ uint8_t adxl345_read_and_clear_interupts();
 void adxl345_measure_mode();
 uint8_t adxl345_init(uint8_t address);
 void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources);
+void print_register_value(uint8_t reg);
 
 #endif
