@@ -99,3 +99,14 @@ void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources)
   adxl345_write_register(ADXL345_REG_INT_MAP, 0); // Map all interrupts to INT1
   adxl345_read_and_clear_interupts();
 }
+
+void print_register_value(uint8_t reg)
+{
+  byte tmp = 0;
+  tmp = adxl345_read_register(reg);
+  Serial.print("0x");
+  Serial.print(reg, HEX);
+  Serial.print(":0x");
+  Serial.print(tmp, HEX);
+  Serial.println("");
+}
