@@ -28,8 +28,9 @@ void setup() {
   Serial.println("Hello");
 
   adxl345_init(ADXL345_STD);
-  adxl345_set_action_interrupt(0xC0, ADXL345_ACT_AC + ADXL345_ACT_XYZ);
-
+  //adxl345_disable_interrupts();
+  //adxl345_set_action_interrupt(0xC0, ADXL345_ACT_AC + ADXL345_ACT_XYZ);
+  adxl345_set_tap_interrupt(0xF0, 10, ADXL345_TAP_XYZ);
   attachInterrupt(digitalPinToInterrupt(adxl345_int_pin), land, RISING);
 
 }
