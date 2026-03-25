@@ -90,13 +90,78 @@ uint8_t adxl345_init(uint8_t address)
   return 1;
 }
 
-void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources)
+void adxl345_disable_interrupts()
 {
   if (no_device) return;
-  adxl345_write_register(ADXL345_REG_THRESH_ACT, trehold);
-  adxl345_write_register(ADXL345_REG_ACT_INACT_CTL, sources); 
-  adxl345_write_register(ADXL345_REG_INT_ENABLE, ADXL345_ACTIVITI); // Enable Act int
-  adxl345_write_register(ADXL345_REG_INT_MAP, 0); // Map all interrupts to INT1
+  adxl345_write_register(ADXL345_REG_INT_ENABLE, 0); 
+}
+
+void adxl345_set_interrupts(adxl345_int_conf_t* int_conf)
+{
+  if (no_device) return;
+  adxl345_write_register(ADXL345_REG_THRESH_ACT,    int_conf->act_trehold  );
+  adxl345_write_register(ADXL345_REG_THRESH_INACT,  int_conf->inact_trehold);
+  adxl345_write_register(ADXL345_REG_THRESH_TAP,    int_conf->tap_trehold  );
+  adxl345_write_register(ADXL345_REG_THRESH_FF,     int_conf->ff_trehold   ); 
+  adxl345_write_register(ADXL345_REG_DUR,           int_conf->duration     );
+  adxl345_write_register(ADXL345_REG_LATENT,        int_conf->latency      );
+  adxl345_write_register(ADXL345_REG_WINDOW,        int_conf->window       );
+  adxl345_write_register(ADXL345_REG_TIME_INACT,    int_conf->inact_time   );
+  adxl345_write_register(ADXL345_REG_TIME_FF,       int_conf->ff_time      ); 
+  adxl345_write_register(ADXL345_REG_ACT_INACT_CTL, int_conf->int_sources  ); 
+  adxl345_write_register(ADXL345_REG_INT_ENABLE,    int_conf->int_enable   ); 
+  adxl345_write_register(ADXL345_REG_INT_MAP,       int_conf->int_map      ); 
+  adxl345_write_register(ADXL345_REG_TAP_AXES,      int_conf->tap_axes     ); 
+  adxl345_read_and_clear_interupts();
+}
+
+void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources)
+{
+  adxl345_int_conf_t int_conf;
+  int_conf.act_trehold = trehold;
+  int_conf.int_sources = sources;
+  int_conf.int_enable  = ADXL345_ACTIVITY;
+  int_conf.int_map     = 0;
+  adxl345_set_interrupts(&int_conf);
+
+  adxl345_read_and_clear_interupts();
+}
+
+void adxl345_set_inaction_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources)
+{
+  adxl345_int_conf_t int_conf;
+  int_conf.inact_trehold = trehold;
+  int_conf.int_sources   = sources;
+  int_conf.inact_time    = duration;
+  int_conf.int_enable    = ADXL345_INACTIVITY;
+  int_conf.int_map       = 0;
+  adxl345_set_interrupts(&int_conf);
+
+  adxl345_read_and_clear_interupts();
+}
+
+void adxl345_set_tap_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources)
+{
+  adxl345_int_conf_t int_conf;
+  int_conf.tap_trehold = trehold;
+  int_conf.tap_axes    = sources;
+  int_conf.duration    = duration;
+  int_conf.int_enable  = ADXL345_SINGLE_TAP;
+  int_conf.int_map     = 0;
+  adxl345_set_interrupts(&int_conf);
+
+  adxl345_read_and_clear_interupts();
+}
+
+void adxl345_set_free_fall_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources)
+{
+  adxl345_int_conf_t int_conf;
+  int_conf.ff_trehold = trehold;
+  int_conf.ff_time    = duration;
+  int_conf.int_enable = ADXL345_FREEFALL;
+  int_conf.int_map    = 0;
+  adxl345_set_interrupts(&int_conf);
+
   adxl345_read_and_clear_interupts();
 }
 
