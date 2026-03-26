@@ -159,26 +159,28 @@ typedef struct {
   int8_t ff_time;
 } adxl345_int_conf_t;
 
+// I2C functions
 uint8_t adxl345_read_register(uint8_t adxl345_reg);
 void adxl345_write_register(uint8_t adxl345_reg, uint8_t adxl345_value);
 
 void adxl345_set_base_address(byte address);
 uint8_t adxl345_read_device_id();
 uint8_t adxl345_test();
-
+uint8_t adxl345_init(uint8_t address);
+void adxl345_measure_mode();
+// Data funtions
 void adxl345_get_data(adxl345_data_t *value);
 uint16_t adxl345_get_data_x();
 uint16_t adxl345_get_data_y();
 uint16_t adxl345_get_data_z();
-uint8_t adxl345_read_and_clear_interupts();
-void adxl345_measure_mode();
-uint8_t adxl345_init(uint8_t address);
+// Interrapt functions
 void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources);
-void print_register_value(uint8_t reg);
 void adxl345_disable_interrupts();
 void adxl345_set_interrupts(adxl345_int_conf_t* int_conf);
 void adxl345_set_tap_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
 void adxl345_set_free_fall_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
 void adxl345_set_inaction_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
+uint8_t adxl345_read_and_clear_interupts();
+void print_register_value(uint8_t reg);
 
 #endif
