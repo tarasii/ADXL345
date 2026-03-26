@@ -6,6 +6,7 @@ Includes examples of interrupt configuration for excess axeleration.
 
 
 ## Get data functions: 
+All axes value structure:
 ```c
 typedef struct {
   int16_t x;
@@ -13,23 +14,23 @@ typedef struct {
   int16_t z;
 } adxl345_data_t;
 ```
-All axes value structure
 
+function returns all axes to adxl345_data_t structure:
 ```c
 void adxl345_get_data(adxl345_data_t *value);
 ```
-returns all axes to adxl345_data_t structure;
 
-
+function returns value of specified axes:
 ```c
 uint16_t adxl345_get_data_x();
 uint16_t adxl345_get_data_y();
 uint16_t adxl345_get_data_z();
 ```
-returns value of specified axes;
+
 
 
 ## Interrupt initialization functions 
+Interrupt configuration structure:
 ```c
 typedef struct {
   int8_t int_enable;
@@ -47,35 +48,34 @@ typedef struct {
   int8_t ff_time;
 } adxl345_int_conf_t;
 ```
-Interrupt configuration structure
 
+main universal interrupt configuration function:
 ```c
 void adxl345_set_interrupts(adxl345_int_conf_t* int_conf);
 ```
-main universal interrupt configuration function;
 
 examples of different interrupts configuration:
+1. excess axeleration interrupt configuration function;
 ```c
 void adxl345_set_action_interrupt(uint8_t trehold, uint8_t sources);
 ```
-excess axeleration interrupt configuration function;
 
+2. tap interrupt configuration function;
 ```c
 void adxl345_set_tap_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
 ```
-tap interrupt configuration function;
 
+3. free fall interrupt configuration function;
 ```c
 void adxl345_set_free_fall_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
 ```
-free fall interrupt configuration function;
 
+4. inaction interrupt configuration function;
 ```c
 void adxl345_set_inaction_interrupt(uint8_t trehold, uint8_t duration, uint8_t sources);
 ```
-inaction interrupt configuration function;
 
+5. disables all interrupts;
 ```c
 void adxl345_disable_interrupts();
 ```
-disables all interrupts;
