@@ -5,7 +5,7 @@ Small ADXL345 lib with interrupts for arduino.
 Includes examples of interrupt configuration for excess axeleration. 
 
 
-*** Get data functions: ***
+## Get data functions: 
 
 void adxl345_get_data(adxl345_data_t *value);
 
@@ -32,7 +32,7 @@ uint16_t adxl345_get_data_z();
 returns value of specified axes;
 
 
-*** Interrupt initialization functions ***
+## Interrupt initialization functions 
 
 void adxl345_set_interrupts(adxl345_int_conf_t* int_conf);
 
